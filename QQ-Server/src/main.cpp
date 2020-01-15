@@ -6,15 +6,18 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <cerrno>
+#include <cstring>
 
 #include "MessageController.h"
 
 #define MAX_MSG_SIZE 256
 #define SERVER_PORT 9987
-
 #define BACKLOG 512
 
-int main() {
+#include <vector>
+
+int main()
+{
     int sock_fd, client_fd; /*sock_fd：监听socket；client_fd：数据传输socket */
     struct sockaddr_in ser_addr{}; /* 本机地址信息 */
     struct sockaddr_in cli_addr{}; /* 客户端地址信息 */
@@ -29,6 +32,10 @@ int main() {
     ser_addr.sin_family = AF_INET;
     ser_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     ser_addr.sin_port = htons(SERVER_PORT);
+
+    int opt = 1;
+    setsockopt(ser_sockfd, SOL_SOCKET, SO_REUSEADDR, (const void *) &opt, sizeof(ser_addr));
+
     if (bind(ser_sockfd, (struct sockaddr *) &ser_addr, sizeof(struct sockaddr_in)) < 0) { /*绑定失败 */
         fprintf(stderr, "Bind Error:%s\n", strerror(errno));
         exit(1);
@@ -40,7 +47,7 @@ int main() {
         exit(1);
     }
 
-    printf("listening on 987\n");
+    printf("listening on 9987\n");
 
     while (true) {/* 等待接收客户连接请求*/
         int cli_sockfd = accept(ser_sockfd, (struct sockaddr *) &cli_addr, &addrlen);

@@ -2,10 +2,6 @@
 # 并将名称保存到 DIR_LIB_SRCS 变量
 aux_source_directory(. DIR_LIB_SRCS)
 
-# 指定生成 MathFunctions 链接库
-add_library (controller ${DIR_LIB_SRCS})
-
-include_directories(../include)
-include_directories(../db)
-include_directories(../crypto)
 include_directories(../tools)
+# 指定生成 MathFunctions 链接库
+add_library (crypto ${DIR_LIB_SRCS})

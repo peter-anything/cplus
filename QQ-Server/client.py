@@ -7,12 +7,12 @@ port = 9987                # 设置端口号
 msg = {
     'type': 'login',
     'payload': {
-        "username": "peter",
+        "username": "peter1",
         "password": "abc123_"
     }
 }
 
-s.connect(('192.168.1.123', port))
+s.connect(('192.168.1.107', port))
 msg = json.dumps(msg)
 msg.replace('\003', '')
 print(msg.encode('utf-8'))
