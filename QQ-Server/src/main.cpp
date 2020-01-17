@@ -6,15 +6,12 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <cerrno>
-#include <cstring>
 
 #include "MessageController.h"
 
 #define MAX_MSG_SIZE 256
 #define SERVER_PORT 9987
 #define BACKLOG 512
-
-#include <vector>
 
 int main()
 {
