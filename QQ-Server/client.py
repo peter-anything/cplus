@@ -12,7 +12,7 @@ msg = {
     }
 }
 
-s.connect(('192.168.1.107', port))
+s.connect(('192.168.1.183', port))
 msg = json.dumps(msg)
 msg.replace('\003', '')
 print(msg.encode('utf-8'))

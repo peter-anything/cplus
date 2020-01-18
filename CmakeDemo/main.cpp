@@ -1,44 +1,13 @@
-#include <iostream>
-#include <thread>
-#include <list>
+#include <threadsafe_stack.h>
 
-using namespace std;
-
-class Test
+int main()
 {
-public:
-    void test_insert() {
-        for (int i = 0; i < 1000000; i++)
-        {
-            cout << "insert to v i: " << i << endl;
-            l.push_back(i);
-        }
-    };
+    threadsafe_stack<int> stack;
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
 
-    void test_delete() {
-        for (int i = 0; i < 1000000; i++)
-        {
-            if (!l.empty())
-            {
-                int i = l.front();
-                l.pop_front();
-                cout << "delete from v i: " << i << endl;
-            }
-            else
-            {
-                cout << "empty v" << endl;
-            }
-        }
-    }
-private:
-    list<int> l;
-};
-
-int main() {
-    Test t;
-    thread th1(&Test::test_insert, ref(t));
-    thread th3(&Test::test_delete, ref(t));
-    th3.join();
-    th1.join();
-
+    stack.tranverse();
 }

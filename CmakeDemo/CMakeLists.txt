@@ -7,6 +7,8 @@ find_package(Threads)
 
 include_directories(./linkedlist)
 
+include_directories(./mythread)
+
 add_executable(CmakeDemo main.cpp)
 
 target_link_libraries(CmakeDemo ${CMAKE_THREAD_LIBS_INIT})

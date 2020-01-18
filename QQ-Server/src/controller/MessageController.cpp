@@ -34,7 +34,7 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
     }
     catch (exception &ex)
     {
-        cout << ex.what() << endl;
+        std::cout << ex.what() << endl;
     }
     Document document;
     document.Parse(recv_msg.data());
@@ -43,37 +43,39 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
 
     if (type == MessageType::LOGIN)
     {
-        cout << "login prcess" << endl;
+        std::cout << "login prcess" << endl;
         Value& payloadObj = document["payload"];
         string username = payloadObj["username"].GetString();
         string password = payloadObj["password"].GetString();
 
         string encoded_pwd = DBUtils::get_pwd_by_name(username);
+
+        Document doc;
+        doc.SetObject();
+        Document::AllocatorType& allocator = doc.GetAllocator();
+        doc.AddMember("status", 1000, allocator);
+        doc.AddMember("message", "sucess", allocator);
+
         StringBuffer strBuf;
         Writer<StringBuffer> writer(strBuf);
-
-        writer.StartObject();
-
-        writer.Key("status");
+        doc.Accept(writer);
 
         if(PBKDF2PasswordHasher::verify(password, encoded_pwd))
         {
-            writer.Int(2000);
-            cout << "login success" << endl;
+            std::cout << "login success" << endl;
         }
         else
         {
-            writer.Int(1000);
-            cout << "login failed" << endl;
+            std::cout << "login failed" << endl;
         }
         writer.EndObject();
 
         string data = strBuf.GetString();
-        cout << data;
+        std::cout << data;
     }
 
     const char * send_msg = "hi, I am server!";
-    strcpy(msg, send_msg);
-    cout << send_msg << endl;
+    std::strcpy(msg, send_msg);
+    std::cout << send_msg << endl;
     send(cli_sockfd, msg, strlen(send_msg), 0); /*发送的数据*/
 }
