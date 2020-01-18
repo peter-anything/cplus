@@ -7,19 +7,22 @@ port = 9987                # 设置端口号
 msg = {
     'type': 'login',
     'payload': {
-        "username": "peter1",
+        "username": "peter2",
         "password": "abc123_"
     }
 }
 
-s.connect(('192.168.1.183', port))
-msg = json.dumps(msg)
-msg.replace('\003', '')
-print(msg.encode('utf-8'))
-s.send(msg.encode('utf-8'))
-data = s.recv(512)
-print('recv:', data.decode('utf-8'))
+hello_msg = {
+    'type': 'send_msg',
+    'payload': {
+        "username": "peter1",
+        "message": "hello peter1"
+    }
+}
 
+s.connect(('192.168.1.183', port))
+msg = json.dumps(hello_msg)
+s.send(msg.encode('utf-8'))
 data = s.recv(512)
 print('recv:', data.decode('utf-8'))
 

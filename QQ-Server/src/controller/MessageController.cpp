@@ -33,6 +33,7 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
     try
     {
         recv_msg.replace(recv_msg.find('\003'), 1, "");
+        recv_msg.replace(recv_msg.find('\177'), 1, "");
     }
     catch (exception &ex)
     {
