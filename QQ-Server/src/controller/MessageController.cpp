@@ -50,16 +50,6 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
 
         string encoded_pwd = DBUtils::get_pwd_by_name(username);
 
-        Document doc;
-        doc.SetObject();
-        Document::AllocatorType& allocator = doc.GetAllocator();
-        doc.AddMember("status", 1000, allocator);
-        doc.AddMember("message", "sucess", allocator);
-
-        StringBuffer strBuf;
-        Writer<StringBuffer> writer(strBuf);
-        doc.Accept(writer);
-
         if(PBKDF2PasswordHasher::verify(password, encoded_pwd))
         {
             std::cout << "login success" << endl;
@@ -68,10 +58,6 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
         {
             std::cout << "login failed" << endl;
         }
-        writer.EndObject();
-
-        string data = strBuf.GetString();
-        std::cout << data;
     }
 
     const char * send_msg = "hi, I am server!";
