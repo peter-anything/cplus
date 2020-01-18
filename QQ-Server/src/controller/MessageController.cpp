@@ -10,16 +10,18 @@
 #include <string.h>
 
 #include "MessageController.h"
-#include "DBUtils.h"
+#include "User.h"
 #include "CryptoUtils.h"
 
 #include <iostream>
+#include <map>
 
 using namespace std;
 using namespace rapidjson;
 
 string MessageType::LOGIN = "login";
 string MessageType::LOGOUT = "logout";
+map<string, int> MessageController::client_socket_map;
 
 void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size)
 {
@@ -48,20 +50,39 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
         string username = payloadObj["username"].GetString();
         string password = payloadObj["password"].GetString();
 
-        string encoded_pwd = DBUtils::get_pwd_by_name(username);
+        User u;
+        string encoded_pwd;
+
+        encoded_pwd = u.get_pwd_by_username(encoded_pwd, username);
+
+        Document jsonDoc;
+        Document::AllocatorType& allocator_type = jsonDoc.GetAllocator();
+        jsonDoc.SetObject();
 
         if(PBKDF2PasswordHasher::verify(password, encoded_pwd))
         {
-            std::cout << "login success" << endl;
+            //MessageController::client_socket_map.insert(pair<string, int>(username, cli_sockfd));
+            std::cout << "success" << endl;
+
+            jsonDoc.AddMember("status", 1000, allocator_type);
+            jsonDoc.AddMember("message", "login success", allocator_type);
+
         }
         else
         {
-            std::cout << "login failed" << endl;
+            jsonDoc.AddMember("status", 2000, allocator_type);
+            jsonDoc.AddMember("message", "login failed", allocator_type);
         }
-    }
 
-    const char * send_msg = "hi, I am server!";
-    std::strcpy(msg, send_msg);
-    std::cout << send_msg << endl;
-    send(cli_sockfd, msg, strlen(send_msg), 0); /*发送的数据*/
+        StringBuffer string_buffer;
+        Writer<StringBuffer> writer(string_buffer);
+        jsonDoc.Accept(writer);
+
+        string str_json = string_buffer.GetString();
+
+        const char* send_msg = str_json.c_str();
+        std::strcpy(msg, send_msg);
+        std::cout << send_msg << endl;
+        send(cli_sockfd, msg, strlen(send_msg), 0); /*发送的数据*/
+    }
 }

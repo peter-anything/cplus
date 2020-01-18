@@ -4,6 +4,7 @@ aux_source_directory(. DIR_SRCS)
 
 add_subdirectory(./controller)
 add_subdirectory(./crypto)
+add_subdirectory(./models)
 
 include_directories(./controller)
 include_directories(./models)
@@ -15,4 +16,4 @@ add_executable(Demo ${DIR_SRCS})
 
 include_directories("/usr/include")
 
-target_link_libraries (Demo controller crypto mysqlcppconn cryptopp)
+target_link_libraries (Demo controller models crypto mysqlcppconn cryptopp)

@@ -6,6 +6,6 @@ aux_source_directory(. DIR_LIB_SRCS)
 add_library (controller ${DIR_LIB_SRCS})
 
 include_directories(../include)
-include_directories(../db)
+include_directories(../models)
 include_directories(../crypto)
 include_directories(../tools)

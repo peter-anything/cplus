@@ -7,6 +7,8 @@
 
 #include <string.h>
 #include <iostream>
+#include <map>
+
 using namespace std;
 
 class MessageType
@@ -20,6 +22,8 @@ class MessageController
 {
 public:
     static void handleMessage(int cli_sockfd, char *msg, unsigned long max_size);
+private:
+    static map<string, int> client_socket_map;
 };
 
 #endif //QQ_SERVER_MESSAGECONTROLLER_H

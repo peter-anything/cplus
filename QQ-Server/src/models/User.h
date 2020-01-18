@@ -3,10 +3,6 @@
 
 #include <iostream>
 
-#include <cppconn/connection.h>
-#include <cppconn/resultset.h>
-#include <cppconn/prepared_statement.h>
-
 using namespace std;
 
 class User
@@ -24,6 +20,8 @@ public:
     short age;
     string created_at;
     string updated_at;
+public:
+    string& get_pwd_by_username(string &pwd, string &name);
 };
 
 #endif
