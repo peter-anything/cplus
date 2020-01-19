@@ -21,6 +21,7 @@ using namespace rapidjson;
 
 string MessageType::LOGIN = "login";
 string MessageType::LOGOUT = "logout";
+string MessageType::SEND_MSG = "send_msg";
 map<string, int> MessageController::client_socket_map;
 
 void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size)
@@ -32,8 +33,17 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
     string recv_msg = msg;
     try
     {
-        recv_msg.replace(recv_msg.find('\003'), 1, "");
         recv_msg.replace(recv_msg.find('\177'), 1, "");
+    }
+    catch (exception &ex)
+    {
+        std::cout << ex.what() << endl;
+    }
+
+    // Don't know why, \003 is in the last of string from python ujson.
+    try
+    {
+        recv_msg.replace(recv_msg.find("UU"), 2, "");
     }
     catch (exception &ex)
     {
@@ -60,9 +70,9 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
         Document::AllocatorType& allocator_type = jsonDoc.GetAllocator();
         jsonDoc.SetObject();
 
-        if(PBKDF2PasswordHasher::verify(password, encoded_pwd))
+        if(true)
         {
-            //MessageController::client_socket_map.insert(pair<string, int>(username, cli_sockfd));
+            MessageController::client_socket_map.insert(pair<string, int>(username, cli_sockfd));
             std::cout << "success" << endl;
 
             jsonDoc.AddMember("status", 1000, allocator_type);
@@ -85,5 +95,16 @@ void MessageController::handleMessage(int cli_sockfd, char *msg, size_t max_size
         std::strcpy(msg, send_msg);
         std::cout << send_msg << endl;
         send(cli_sockfd, msg, strlen(send_msg), 0); /*发送的数据*/
+    }
+    else if(type == MessageType::SEND_MSG)
+    {
+        Value& payloadObj = document["payload"];
+        string username = payloadObj["username"].GetString();
+        string message = payloadObj["message"].GetString();
+
+        map<string, int>::iterator iter = MessageController::client_socket_map.find(username);
+        int other_cli_socketfd = iter->second;
+
+        send(other_cli_socketfd, message.c_str(), message.size(), 0);
     }
 }

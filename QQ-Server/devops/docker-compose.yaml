@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  mysql:
+    build: ./mysql
+    image: mysql:qq
+    restart: always
+    ports:
+      - 13306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc123_
+      - MYSQL_USER=qq
+      - MYSQL_PASSWORD=abc123_
+    volumes:
+      - /data/qq/db/data:/var/lib/mysql

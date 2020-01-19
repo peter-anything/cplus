@@ -16,6 +16,7 @@ class MessageType
 public:
     static string LOGIN;
     static string LOGOUT;
+    static string SEND_MSG;
 };
 
 class MessageController
