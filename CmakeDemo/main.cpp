@@ -12,5 +12,7 @@ int main()
     tree.Insert(7);
     tree.Insert(20);
     tree.Traverse();
+    tree.Traverse();
+
     std::cout << "hello " << std::endl;
 }
