@@ -1,13 +1,11 @@
 #include <threadsafe_stack.h>
+#include "tree.h"
+#include <iostream>
 
 int main()
 {
-    threadsafe_stack<int> stack;
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-    stack.push(4);
-    stack.push(5);
-
-    stack.tranverse();
+    BinaryTree<int> tree;
+    tree.Insert(10);
+    tree.Insert(9);
+    std::cout << "hello " << std::endl;
 }
