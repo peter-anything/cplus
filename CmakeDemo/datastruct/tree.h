@@ -1,6 +1,8 @@
 #ifndef CMAKEDEMO_TREE_H
 #define CMAKEDEMO_TREE_H
 
+#include <iostream>
+
 template <class T>
 class BinaryTree {
 private:
@@ -21,8 +23,30 @@ public:
         InnerInsert(value, std::move(root));
     }
 
+    void Traverse()
+    {
+        InnerTraverse(std::move(root));
+    }
+
 private:
     std::unique_ptr<Node> root;
+
+    void InnerTraverse(std::unique_ptr<Node> root)
+    {
+        if (root != nullptr)
+        {
+            std::cout << *root->data << '\t';
+
+            if (root->left != nullptr)
+            {
+                InnerTraverse(std::move(root->left));
+            }
+            else
+            {
+                InnerTraverse(std::move(root->right));
+            }
+        }
+    }
 
     void InnerInsert(T const &value, std::unique_ptr<Node> root) {
         if (root == nullptr)
@@ -38,6 +62,22 @@ private:
                 {
                     std::unique_ptr<Node> new_node(new Node(value));
                     root->left = std::move(new_node);
+                }
+                else
+                {
+                    InnerInsert(value, std::move(root->left));
+                }
+            }
+            else
+            {
+                if (root->right == nullptr)
+                {
+                    std::unique_ptr<Node> new_node(new Node(value));
+                    root->right = std::move(new_node);
+                }
+                else
+                {
+                    InnerInsert(value, std::move(root->right));
                 }
             }
         }
