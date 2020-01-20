@@ -12,7 +12,8 @@ int main()
     tree.Insert(7);
     tree.Insert(20);
     tree.Traverse();
-    tree.Traverse();
+    std::cout << tree.Height() << std::endl;
+    std::cout << tree.IsBalance() << std::endl;
 
     std::cout << "hello " << std::endl;
 }

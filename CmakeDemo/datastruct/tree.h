@@ -15,6 +15,10 @@ public:
         Node() : left(), right() {}
 
         Node(T const &value) : data(std::make_shared<T>(value)), test_data(value) {}
+
+        ~Node() {
+            std::cout << "destroy node" << std::endl;
+        }
     };
 
 public:
@@ -30,8 +34,29 @@ public:
         std::cout << std::endl;
     }
 
+    int Height()
+    {
+        return InnerHeight(root);
+    }
+
+    bool IsBalance()
+    {
+        return abs(InnerHeight(root->left) - InnerHeight(root->right) ) <= 1;
+    }
+
 public:
     std::shared_ptr<Node> root;
+
+    int InnerHeight(std::shared_ptr<Node> root) {
+        if (root == nullptr) {
+            return 0;
+        }
+        int left_height = InnerHeight(root->left);
+        int right_height = InnerHeight(root->right);
+        int height = left_height - right_height > 0 ? left_height : right_height;
+
+        return height + 1;
+    }
 
     void InnerTraverse(std::shared_ptr<Node> root)
     {
