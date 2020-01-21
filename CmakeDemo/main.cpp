@@ -1,13 +1,9 @@
-#include <threadsafe_stack.h>
+#include "namespace_test.h"
 
-int main()
+int main(int args, char* argv[])
 {
-    threadsafe_stack<int> stack;
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-    stack.push(4);
-    stack.push(5);
+    pid_t pid = getpid();
+    printf("Parent[%d] - create a container!\n", pid);
+    pid_t child_pid = clone
 
-    stack.tranverse();
 }
