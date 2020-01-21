@@ -7,7 +7,9 @@ find_package(Threads)
 
 include_directories(./linkedlist)
 
-include_directories(./mythread)
+include_directories(./datastruct)
+
+include_directories(./kernel)
 
 add_executable(CmakeDemo main.cpp)
 
