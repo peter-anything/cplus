@@ -9,6 +9,8 @@ include_directories(./linkedlist)
 
 include_directories(./mythread)
 
+include_directories(./datastruct)
+
 add_executable(CmakeDemo main.cpp)
 
 target_link_libraries(CmakeDemo ${CMAKE_THREAD_LIBS_INIT})
