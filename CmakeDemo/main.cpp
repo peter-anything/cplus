@@ -1,6 +1,9 @@
-#include "atomic_test.h"
+#include "namespace_test.h"
 
-int main()
+int main(int args, char* argv[])
 {
-    test4();
+    pid_t pid = getpid();
+    printf("Parent[%d] - create a container!\n", pid);
+    pid_t child_pid = clone
+
 }
