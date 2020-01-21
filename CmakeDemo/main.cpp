@@ -1,9 +1,14 @@
-#include "namespace_test.h"
+#include <rbtree.h>
+#include <iostream>
 
-int main(int args, char* argv[])
+using namespace std;
+
+int main()
 {
-    pid_t pid = getpid();
-    printf("Parent[%d] - create a container!\n", pid);
-    pid_t child_pid = clone
-
+    RBTree<int, string> tree;
+    tree.Insert(1, "hello");
+    tree.Insert(2, "hello");
+    tree.Insert(3, "hello");
+    tree.Insert(4, "hello");
+    tree.InOrder();
 }

@@ -1,54 +1,70 @@
-#include <set>
 #include <iostream>
 
-using namespace std;
-
-class Number
+class Test
 {
 public:
-    int num = 0;
-    set<int> related_nums;
+    int m_a;
 public:
-    Number(int n) : num(n)
+    Test(int a = 0) : m_a(a) {}
+    ~Test()
     {
-        cout << "constructor" << endl;
-        related_nums.insert(n);
-    };
-
-    Number(const Number& other)
-    {
-        cout << "copy constructor" << endl;
-        this->num = other.num;
-        this->related_nums = other.related_nums;
+        std::cout << "destroy" << std::endl;
     }
 };
 
-#include <vector>
-#include <set>
+void Fun(std::auto_ptr<Test> p)
+{
+    std::cout << p->m_a << std::endl;
+}
 
-int main() {
+class B;
+class A
+{
+public:
+    A() : m_b() {};
+    ~A() {
+        std::cout << "delete A" << std::endl;
+    }
+public:
+    std::weak_ptr<B> m_b;
+};
 
-    int n = 7;
-    vector<Number*> v_number;
-    for (int i = 0; i < 7; i++)
+class B
+{
+public:
+    B() : m_a(nullptr) {};
+    ~B() {
+        std::cout << "delete B" << std::endl;
+    }
+public:
+    std::shared_ptr<A> m_a;
+};
+
+template<class T>
+class Enalbed_Shared_From_This
+{
+public:
+    std::shared_ptr<T> shared_from_this() {
+        return std::shared_ptr<T> this;
+    }
+};
+
+class AA : public std::enable_shared_from_this<AA>
+{
+public:
+    AA()
     {
-        Number* num = new Number(i);
-        v_number.push_back(num);
+        std::cout << "new AA" << std::endl;
     }
 
-    Number* num0 = v_number[0];
-
-    set<int> s = num0->related_nums;
-
-    set<int>::iterator itr = num0->related_nums.begin();
-    while (itr != num0->related_nums.end())
+    ~AA()
     {
-        cout << "hello";
-        cout << *itr << '\t';
-        ++itr;
+        std::cout << "delete AA" << std::endl;
     }
+};
 
-    cout << "test";
-
-    cout << endl;
+int main()
+{
+    std::shared_ptr<AA> p1(std::make_shared<AA>());
+    std::shared_ptr<AA> p2 = p1->shared_from_this();
 }

@@ -2,6 +2,7 @@
 #define CMAKEDEMO_TREE_H
 
 #include <iostream>
+#include <memory>
 
 template <class T>
 class BinaryTree {
@@ -84,29 +85,12 @@ public:
         }
         else
         {
-            if (value <= *root->data)
-            {
-                if (root->left == nullptr)
-                {
-                    std::shared_ptr<Node> new_node(new Node(value));
-                    root->left = new_node;
-                }
-                else
-                {
-                    root->left = InnerInsert(value, root->left);
-                }
+            if (value <= *root->data) {
+                root->left = InnerInsert(value, root->left);
             }
             else
             {
-                if (root->right == nullptr)
-                {
-                    std::shared_ptr<Node> new_node(new Node(value));
-                    root->right = new_node;
-                }
-                else
-                {
-                    root->right = InnerInsert(value, root->right);
-                }
+                root->right = InnerInsert(value, root->right);
             }
         }
 
