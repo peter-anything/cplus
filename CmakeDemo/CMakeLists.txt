@@ -11,6 +11,8 @@ include_directories(./datastruct)
 
 include_directories(./kernel)
 
+include_directories(./leetcode)
+
 add_executable(CmakeDemo main.cpp)
 
 target_link_libraries(CmakeDemo ${CMAKE_THREAD_LIBS_INIT})
