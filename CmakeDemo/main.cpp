@@ -1,4 +1,4 @@
-#include "dp/longestPalindrome.h"
+#include "ds/trie.h"
 
 int main()
 {
