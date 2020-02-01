@@ -3,13 +3,13 @@ project(CmakeDemo)
 
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(Threads)
+#find_package(Threads)
 
-include_directories(./linkedlist)
+#include_directories(./linkedlist)
 
-include_directories(./datastruct)
+#include_directories(./datastruct)
 
-include_directories(./kernel)
+#include_directories(./kernel)
 
 include_directories(./leetcode)
 
