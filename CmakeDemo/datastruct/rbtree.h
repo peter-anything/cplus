@@ -69,6 +69,9 @@ private:
 
         parent->left = subLR;
         if (subLR) {
+
+
+
             subLR->parent = parent;
         }
         subL->right = parent;
