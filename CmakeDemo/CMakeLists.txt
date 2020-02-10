@@ -7,11 +7,11 @@ set(CMAKE_CXX_STANDARD 11)
 
 #include_directories(./linkedlist)
 
-include_directories(./datastruct)
+#include_directories(./datastruct)
 
 #include_directories(./kernel)
 
-#include_directories(./leetcode)
+include_directories(./leetcode)
 
 add_executable(CmakeDemo main.cpp)
 
