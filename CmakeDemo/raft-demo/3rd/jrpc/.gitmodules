@@ -1,0 +1,6 @@
+[submodule "3rd/jackson"]
+	path = 3rd/jackson
+	url = https://github.com/guangqianpeng/jackson.git
+[submodule "3rd/tinyev"]
+	path = 3rd/tinyev
+	url = https://github.com/guangqianpeng/tinyev.git

@@ -1,7 +1,6 @@
-#include "datastruct/adjacencylist.h"
+#include "docker-inside/cgroup/memory_limit.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     test();
-    return 0;
 }

@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(CmakeDemo)
 
-set(CMAKE_CXX_STANDARD 11)
-
-#find_package(Threads)
+find_package(Threads)
 
 #include_directories(./linkedlist)
 
@@ -12,7 +10,10 @@ set(CMAKE_CXX_STANDARD 11)
 #include_directories(./kernel)
 
 include_directories(./leetcode)
+include_directories(./utils)
+add_subdirectory(./docker-inside)
+#add_subdirectory(./raft-demo)
 
-add_executable(CmakeDemo main.cpp)
+add_executable(CmakeDemo main.cpp docker-inside/cgroup/memory_limit.h)
 
 target_link_libraries(CmakeDemo ${CMAKE_THREAD_LIBS_INIT})

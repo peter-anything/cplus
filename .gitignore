@@ -39,3 +39,4 @@
 .idea
 
 **debug
+CmakeDemo/cmake-build**/
