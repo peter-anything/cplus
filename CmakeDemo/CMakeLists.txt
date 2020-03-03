@@ -5,15 +5,15 @@ find_package(Threads)
 
 #include_directories(./linkedlist)
 
-#include_directories(./datastruct)
+include_directories(./datastruct)
 
 #include_directories(./kernel)
 
 include_directories(./leetcode)
-include_directories(./utils)
-add_subdirectory(./docker-inside)
+#include_directories(./utils)
+#add_subdirectory(./docker-inside)
 #add_subdirectory(./raft-demo)
 
-add_executable(CmakeDemo main.cpp docker-inside/cgroup/memory_limit.h)
+add_executable(CmakeDemo main.cpp)
 
 target_link_libraries(CmakeDemo ${CMAKE_THREAD_LIBS_INIT})
