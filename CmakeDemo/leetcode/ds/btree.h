@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<stack>
 
 using namespace std;
 
@@ -80,17 +81,83 @@ public:
 
         return true;
     }
+
+    vector<int> postorderTraversal(TreeNode* root) {
+        if (root == NULL)
+        {
+            return {};
+        }
+        stack<TreeNode*> stack;
+        stack.push(root);
+        vector<int> res;
+        while (!stack.empty())
+        {
+            TreeNode* curr = stack.top();
+            stack.pop();
+            res.push_back(curr->val);
+
+            if (curr->left != NULL)
+            {
+                stack.push(curr->left);
+            }
+            if (curr->right != NULL)
+            {
+                stack.push(curr->right);
+            }
+        }
+
+        reverse(res.begin(), res.end());
+        return res;
+    }
+
+    vector<int> inorderTraversal(TreeNode* root) {
+        if (root == NULL)
+        {
+            return {};
+        }
+
+        stack<TreeNode*> stack;
+        vector<int> res;
+        TreeNode* curr = root;
+
+        while (curr != NULL || !stack.empty())
+        {
+            if (curr)
+            {
+                if (curr->left != NULL)
+                {
+                    stack.push(curr);
+                    curr = curr->left;
+                }  
+                else
+                {
+                    res.push_back(curr->val);
+                    curr = curr->right;
+                }
+            }
+            else
+            {
+                if (!stack.empty())
+                {
+                    curr = stack.top();
+                    res.push_back(curr->val);
+                    stack.pop();
+                }
+
+                curr = curr->right;
+            }
+        }
+
+        return res;
+    }
 };
 
 void test()
 {
-    vector<int> nums = { 1, 2, 3, 5};
     Tree t;
-    t.root = new TreeNode(1);
-    t.root->left = new TreeNode(2);
-    t.root->right = new TreeNode(3);
-    t.root->left->left = new TreeNode(5);
-    t.root->right->right = new TreeNode(8);
+    t.root = new TreeNode(3);
+    t.root->left = new TreeNode(1);
+    t.root->right = new TreeNode(2);
     Solution solu;
-    solu.isCompleteTree(t.root);
+    solu.inorderTraversal(t.root);
 }

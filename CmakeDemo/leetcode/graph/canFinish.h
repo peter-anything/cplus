@@ -1,10 +1,65 @@
 #include<vector>
 #include<queue>
+#include<unordered_set>
 
 using namespace std;
 
 class Solution {
 public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges)
+    {
+        if (n == 1)
+        {
+            return { 0 };
+        }
+
+        vector<unordered_set<int>> adjs(n);
+        for (auto edge : edges)
+        {
+            adjs[edge[0]].insert(edge[1]);
+            adjs[edge[1]].insert(edge[0]);
+        }
+
+        queue<int> Q;
+        for (int i = 0; i < n; ++i)
+        {
+            if (adjs[i].size() == 1)
+            {
+                Q.push(i);
+            }
+        }
+
+        while (n > 2)
+        {
+            int sz = Q.size();
+            n -= sz;
+
+            while (size--> 0)
+            {
+                auto t = Q.front();
+                Q.pop();
+                for (auto itm : adjs[t]) 
+                {
+                    adjs[itm].erase(t);
+                    if (adjs[itm].size() == 1)
+                    {
+                        Q.push(itm);
+                    }
+                }
+
+            }
+        }
+
+        vector<int> res;
+        while (!Q.empty())
+        {
+            res.push_back(Q.front());
+            Q.pop();
+        }
+
+        return res;
+    }
+
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         vector<int> inDegree(numCourses, 0);
 
